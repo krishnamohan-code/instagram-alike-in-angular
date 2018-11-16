@@ -39,4 +39,4 @@ testem.log
 Thumbs.db
 
 # Database configuration
-./src/app/fireBaseConfig.ts
+/src/app/fireBaseConfig.ts
