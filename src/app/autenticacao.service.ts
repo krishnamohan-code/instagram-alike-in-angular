@@ -6,7 +6,7 @@ export class Autenticacao {
     firebase.auth().createUserWithEmailAndPassword(usuario.email, usuario.senha);
   }
 
-  public autenticar(email: string, senha: string): void{
+  public autenticar(email: string, senha: string): void {
     console.log(email + ' ' + senha);
     firebase.auth().signInWithEmailAndPassword(email, senha)
       .then((resposta: any) => console.log(resposta) )
