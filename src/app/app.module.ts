@@ -15,6 +15,7 @@ import { CadastroComponent } from './acesso/cadastro/cadastro.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { PublicacoesComponent } from './home/publicacoes/publicacoes.component';
+import { AuatenticacaoGuard } from './autenticacao-guard.service';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,7 @@ import { PublicacoesComponent } from './home/publicacoes/publicacoes.component';
     ReactiveFormsModule,
     RouterModule.forRoot(ROUTES)
   ],
-  providers: [ Autenticacao ],
+  providers: [ Autenticacao, AuatenticacaoGuard ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
