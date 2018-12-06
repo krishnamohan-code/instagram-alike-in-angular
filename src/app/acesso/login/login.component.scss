@@ -5,3 +5,13 @@
     height: 60px;
     width: 100%;
 }
+
+input.ng-touched.ng-invalid {
+  border: 2px solid red;
+  border-radius: 2px;
+}
+
+input.ng-touched.ng-valid {
+  border: 2px solid green;
+  border-radius: 2px;
+}
