@@ -51,5 +51,4 @@ export class AcessoComponent implements OnInit {
     console.log(event);
   }
 
-
 }

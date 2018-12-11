@@ -2,13 +2,20 @@ import { Autenticacao } from './../../autenticacao.service';
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
 import { Usuario } from './../usuario.model';
+import { formIncorreto } from 'src/app/animations';
+
 
 @Component({
   selector: 'app-cadastro',
   templateUrl: './cadastro.component.html',
-  styleUrls: ['./cadastro.component.scss']
+  styleUrls: ['./cadastro.component.scss'],
+  animations: [
+    formIncorreto
+  ]
 })
 export class CadastroComponent implements OnInit {
+  public estadoFormulario = 'normal';
+
   @Output() public exibirPainel: EventEmitter<string> = new EventEmitter<string>();
 
   public formulario: FormGroup = new FormGroup({
@@ -45,16 +52,19 @@ export class CadastroComponent implements OnInit {
         this.formulario.value.nome_completo,
         this.formulario.value.nome_usuario,
         this.formulario.value.senha
-      );
 
-      this.autenticacao
+        );
+
+        this.autenticacao
         .cadastrarUsuario(usuario)
         .then(() => this.exibirPainelLogin());
-    } else {
-      this.formulario.get('email').markAsTouched();
-      this.formulario.get('nome_completo').markAsTouched();
-      this.formulario.get('nome_usuario').markAsTouched();
-      this.formulario.get('senha').markAsTouched();
-    }
+      } else {
+        this.estadoFormulario = 'invalido';
+        this.formulario.get('email').markAsTouched();
+        this.formulario.get('nome_completo').markAsTouched();
+        this.formulario.get('nome_usuario').markAsTouched();
+        this.formulario.get('senha').markAsTouched();
+
+      }
   }
 }

@@ -2,7 +2,7 @@
   <div class="card-body">
     <div class="card-title"></div>
 
-    <form [formGroup]="formulario" (ngSubmit)="cadastrarUsuario()" >
+    <form [formGroup]="formulario" (ngSubmit)="cadastrarUsuario()" [@animacao-formulario]="estadoFormulario">
       <div class="form-group">
         <input
           type="email"
