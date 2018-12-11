@@ -60,6 +60,9 @@ export class CadastroComponent implements OnInit {
         .then(() => this.exibirPainelLogin());
       } else {
         this.estadoFormulario = 'invalido';
+        setTimeout(() => {
+          this.estadoFormulario = 'normal';
+        }, 700);
         this.formulario.get('email').markAsTouched();
         this.formulario.get('nome_completo').markAsTouched();
         this.formulario.get('nome_usuario').markAsTouched();

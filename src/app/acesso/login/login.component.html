@@ -2,7 +2,7 @@
   <div class="card-body">
     <div class="card-title"></div>
 
-    <form [formGroup]="formLogin" (ngSubmit)="autenticar()" >
+    <form [formGroup]="formLogin" (ngSubmit)="autenticar()" [@animacao-formulario]="estadoFormulario" >
       <div class="form-group">
         <input
           type="email"
