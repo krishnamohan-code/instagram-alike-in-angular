@@ -1,8 +1,12 @@
+import { takeUntil } from 'rxjs/operators';
+import { Progresso } from './../../progresso.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import * as firebase from 'firebase';
-
+import 'rxjs/add/observable/interval';
 import { Bd } from './../../bd.service';
+import { Observable, interval, observable, Subject, pipe } from 'rxjs';
+
 
 @Component({
   selector: 'app-incluir-publicacao',
@@ -14,13 +18,16 @@ export class IncluirPublicacaoComponent implements OnInit {
   public email: string;
   private imagem: any;
 
+  public progressoPublicacao = 'pendente';
+  public porcentagemUpload: number;
+
   public formPublicacao: FormGroup = new FormGroup({
     'titulo': new FormControl(null, [
       Validators.required
     ])
   });
 
-  constructor(private bd: Bd) { }
+  constructor(private bd: Bd, private progresso: Progresso) { }
 
   ngOnInit() {
     firebase.auth().onAuthStateChanged((user) => {
@@ -34,6 +41,26 @@ export class IncluirPublicacaoComponent implements OnInit {
       titulo: this.formPublicacao.value.titulo,
       imagem: this.imagem[0]
     });
+
+    const acompanhamentoUpload = Observable.interval(1500);
+
+    const continua = new Subject();
+
+    continua.next(true);
+
+    acompanhamentoUpload
+      .pipe(takeUntil(continua))
+      .subscribe(() => {
+        console.log(this.progresso.status);
+        console.log(this.progresso.estado);
+        this.progressoPublicacao = 'andamento';
+        this.porcentagemUpload = Math.round((this.progresso.estado.bytesTransferred / this.progresso.estado.totalBytes) * 100);
+        if (this.progresso.status === 'concluido') {
+          this.progressoPublicacao = 'concluido';
+          continua.next(false);
+        }
+      });
+
   }
   public preparaImagemUpload(event: Event): void {
     this.imagem = (<HTMLInputElement>event.target).files;
