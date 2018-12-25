@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import * as firebase from 'firebase';
 import { Progresso } from './progresso.service';
+import { DeprecatedDatePipe } from '@angular/common';
+import { DriverProvider } from 'protractor/built/driverProviders';
 
 @Injectable()
 export class Bd {
@@ -35,4 +37,39 @@ export class Bd {
     });
     }
 
+    public consultaPublicacoes(emailUsuario: string): any {
+      firebase.database().ref(`publicacoes/${btoa(emailUsuario)}`)
+        .once('value')
+        .then((snapshot: any) => {
+          // console.log(snapshot.val());
+
+          let publicacoes: Array<any> = [];
+
+          snapshot.forEach((childSnapshot: any) => {
+
+            let publicacao = childSnapshot.val();
+            //consultar a url da imagem
+            firebase.storage().ref()
+              .child(`imagens/${childSnapshot.key}`)
+              .getDownloadURL()
+              .then((url: string) => {
+                publicacao.url_imagem = url;
+
+                // Consultar o nome do usuario responsavel pela publicacao
+                firebase.database().ref(`usuario_detalhe/${btoa(emailUsuario)}`)
+                  .once('value')
+                  .then((snapshot: any) => {
+                    console.log(snapshot.val());
+                  });
+
+                console.log(btoa(emailUsuario));
+                publicacoes.push(publicacao);
+
+
+              });
+          });
+
+          console.log(publicacoes);
+        });
+    }
 }

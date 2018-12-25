@@ -65,4 +65,7 @@ export class IncluirPublicacaoComponent implements OnInit {
   public preparaImagemUpload(event: Event): void {
     this.imagem = (<HTMLInputElement>event.target).files;
   }
+  public setProgressoPublicacaoPendente(): void {
+    this.progressoPublicacao = 'pendente';
+  }
 }
