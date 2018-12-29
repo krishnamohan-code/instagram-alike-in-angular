@@ -25,7 +25,6 @@ export class Bd {
           (snapshot: any) => {
             this.progresso.status = 'andamento';
             this.progresso.estado = snapshot;
-            console.log('Snapshot: ' + snapshot);
           },
           (error) => {
             this.progresso.status = 'erro';
@@ -35,10 +34,13 @@ export class Bd {
           });
 
     });
-    }
+  }
 
-    public consultaPublicacoes(emailUsuario: string): any {
+  public consultaPublicacoes(emailUsuario: string): Promise<any> {
+
+    return new Promise((resolve, reject) => {
       firebase.database().ref(`publicacoes/${btoa(emailUsuario)}`)
+        .orderByKey()
         .once('value')
         .then((snapshot: any) => {
           // console.log(snapshot.val());
@@ -46,31 +48,35 @@ export class Bd {
           const publicacoes: Array<any> = [];
 
           snapshot.forEach((childSnapshot: any) => {
-
             const publicacao = childSnapshot.val();
-            // consultar a url da imagem
-            firebase.storage().ref()
-              .child(`imagens/${childSnapshot.key}`)
-              .getDownloadURL()
-              .then((url: string) => {
-                publicacao.url_imagem = url;
+            publicacao.key = childSnapshot.key;
 
-                // Consultar o nome do usuario responsavel pela publicacao
-                firebase.database().ref(`usuario_detalhe/${btoa(emailUsuario)}`)
-                  .once('value')
-                  // tslint:disable-next-line:no-shadowed-variable
-                  .then((snapshot: any) => {
-                    console.log(snapshot.val());
-                  });
-
-                console.log(btoa(emailUsuario));
-                publicacoes.push(publicacao);
-
-
-              });
+            publicacoes.push(publicacao);
           });
-
+            return publicacoes.reverse();
+        })
+        .then((publicacoes: any) => {
           console.log(publicacoes);
+
+          publicacoes.forEach(publicacao => {
+          firebase.storage().ref()
+            .child(`imagens/${publicacao.key}`)
+            .getDownloadURL()
+            .then((url: string) => {
+              publicacao.url_imagem = url;
+
+              // Consultar o nome do usuario responsavel pela publicacao
+              firebase.database().ref(`usuario_detalhe/${btoa(emailUsuario)}`)
+                .once('value')
+                .then((snapshotName: any) => {
+                  publicacao.nome_usuario = snapshotName.val().nome_usuario;
+                });
+            });
+          });
+          resolve(publicacoes);
         });
-    }
+    });
+  }
 }
+
+
