@@ -43,12 +43,12 @@ export class Bd {
         .then((snapshot: any) => {
           // console.log(snapshot.val());
 
-          let publicacoes: Array<any> = [];
+          const publicacoes: Array<any> = [];
 
           snapshot.forEach((childSnapshot: any) => {
 
-            let publicacao = childSnapshot.val();
-            //consultar a url da imagem
+            const publicacao = childSnapshot.val();
+            // consultar a url da imagem
             firebase.storage().ref()
               .child(`imagens/${childSnapshot.key}`)
               .getDownloadURL()
@@ -58,6 +58,7 @@ export class Bd {
                 // Consultar o nome do usuario responsavel pela publicacao
                 firebase.database().ref(`usuario_detalhe/${btoa(emailUsuario)}`)
                   .once('value')
+                  // tslint:disable-next-line:no-shadowed-variable
                   .then((snapshot: any) => {
                     console.log(snapshot.val());
                   });

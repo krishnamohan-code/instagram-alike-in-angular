@@ -1,10 +1,10 @@
-import { takeUntil } from 'rxjs/operators';
-import { Progresso } from './../../progresso.service';
-import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { Progresso } from './../../progresso.service';
 import * as firebase from 'firebase';
-import 'rxjs/add/observable/interval';
 import { Bd } from './../../bd.service';
+
+import { takeUntil } from 'rxjs/operators';
 import { Observable, interval, observable, Subject, pipe } from 'rxjs';
 
 
@@ -42,7 +42,7 @@ export class IncluirPublicacaoComponent implements OnInit {
       imagem: this.imagem[0]
     });
 
-    const acompanhamentoUpload = Observable.interval(1500);
+    const acompanhamentoUpload = interval(1500);
 
     const continua = new Subject();
 
@@ -51,10 +51,12 @@ export class IncluirPublicacaoComponent implements OnInit {
     acompanhamentoUpload
       .pipe(takeUntil(continua))
       .subscribe(() => {
-        console.log(this.progresso.status);
-        console.log(this.progresso.estado);
         this.progressoPublicacao = 'andamento';
-        this.porcentagemUpload = Math.round((this.progresso.estado.bytesTransferred / this.progresso.estado.totalBytes) * 100);
+
+        this.porcentagemUpload = Math.round(
+          (this.progresso.estado.bytesTransferred / this.progresso.estado.totalBytes) * 100
+        );
+
         if (this.progresso.status === 'concluido') {
           this.progressoPublicacao = 'concluido';
           continua.next(false);
