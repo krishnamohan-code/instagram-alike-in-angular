@@ -1,19 +1,19 @@
-import { Autenticacao } from './../../autenticacao.service';
+import { Autenticacao } from '../../autenticacao.service';
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
-import { Usuario } from './../usuario.model';
+import { Usuario } from '../usuario.model';
 import { formIncorreto } from 'src/app/animations';
 
 
 @Component({
-  selector: 'app-cadastro',
-  templateUrl: './cadastro.component.html',
-  styleUrls: ['./cadastro.component.scss'],
+  selector: 'app-signup',
+  templateUrl: './signup.component.html',
+  styleUrls: ['./signup.component.scss'],
   animations: [
     formIncorreto
   ]
 })
-export class CadastroComponent implements OnInit {
+export class SignupComponent implements OnInit {
   public estadoFormulario = 'normal';
 
   @Output() public exibirPainel: EventEmitter<string> = new EventEmitter<string>();
@@ -44,7 +44,7 @@ export class CadastroComponent implements OnInit {
     this.exibirPainel.emit('login');
   }
 
-  public cadastrarUsuario(): void {
+  public registerUser(): void {
 
     if (this.formulario.status === 'VALID') {
       const usuario: Usuario = new Usuario(
