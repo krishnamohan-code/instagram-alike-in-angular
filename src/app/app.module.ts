@@ -5,8 +5,6 @@ import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ROUTES } from './app.routes';
 import { RouterModule } from '@angular/router';
-
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AccessComponent } from './access/access.component';

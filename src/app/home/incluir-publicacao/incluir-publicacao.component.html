@@ -12,18 +12,19 @@
 
       <div class="modal-body">
 
-        <input
-          type="file"
-          class="form-control"
-          accept="image/*"
-          (change)="prepareImageUpload($event)"
-        />
 
         <input
           type="text"
           placeholder="Titulo"
           class="form-control"
           formControlName="titulo"
+        />
+
+        <input
+          type="file"
+          class="form-control"
+          accept="image/*"
+          (change)="prepareImageUpload($event)"
         />
 
       </div>
