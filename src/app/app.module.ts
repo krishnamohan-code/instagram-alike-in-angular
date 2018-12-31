@@ -9,10 +9,10 @@ import { RouterModule } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AcessoComponent } from './acesso/acesso.component';
-import { BannerComponent } from './acesso/banner/banner.component';
-import { LoginComponent } from './acesso/login/login.component';
-import { SignupComponent } from './acesso/signup/signup.component';
+import { AccessComponent } from './access/access.component';
+import { BannerComponent } from './access/banner/banner.component';
+import { LoginComponent } from './access/login/login.component';
+import { SignupComponent } from './access/signup/signup.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { PublicacoesComponent } from './home/publicacoes/publicacoes.component';
@@ -23,7 +23,7 @@ import { Progresso } from './progresso.service';
 @NgModule({
   declarations: [
     AppComponent,
-    AcessoComponent,
+    AccessComponent,
     BannerComponent,
     LoginComponent,
     SignupComponent,

@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
 
 @Component({
-  selector: 'app-acesso',
-  templateUrl: './acesso.component.html',
-  styleUrls: ['./acesso.component.scss'],
+  selector: 'app-access',
+  templateUrl: './access.component.html',
+  styleUrls: ['./access.component.scss'],
   animations: [
 
     trigger('animacao-banner', [
@@ -35,7 +35,7 @@ import { trigger, state, style, transition, animate, keyframes } from '@angular/
   ]
 })
 
-export class AcessoComponent implements OnInit {
+export class AccessComponent implements OnInit {
   public estadoBanner = 'criado';
   public estadoPainel = 'criado';
 
