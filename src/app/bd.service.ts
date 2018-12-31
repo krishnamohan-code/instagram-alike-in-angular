@@ -11,7 +11,7 @@ export class Bd {
 
   }
 
-  public publicar(publicacao: any): void {
+  public publish(publicacao: any): void {
 
     firebase.database().ref(`publicacoes/${btoa(publicacao.email)}`)
     .push( { titulo: publicacao.titulo})
@@ -23,14 +23,14 @@ export class Bd {
         .put(publicacao.imagem)
         .on(firebase.storage.TaskEvent.STATE_CHANGED,
           (snapshot: any) => {
-            this.progresso.status = 'andamento';
-            this.progresso.estado = snapshot;
+            this.progresso.status = 'going';
+            this.progresso.state = snapshot;
           },
           (error) => {
             this.progresso.status = 'erro';
           },
           () => {
-            this.progresso.status = 'concluido';
+            this.progresso.status = 'completed';
           });
 
     });
@@ -43,7 +43,6 @@ export class Bd {
         .orderByKey()
         .once('value')
         .then((snapshot: any) => {
-          // console.log(snapshot.val());
 
           const publicacoes: Array<any> = [];
 
@@ -56,7 +55,6 @@ export class Bd {
             return publicacoes.reverse();
         })
         .then((publicacoes: any) => {
-          console.log(publicacoes);
 
           publicacoes.forEach(publicacao => {
           firebase.storage().ref()

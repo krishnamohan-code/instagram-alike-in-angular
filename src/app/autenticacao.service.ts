@@ -53,7 +53,7 @@ export class Autenticacao {
     return this.token_id !== undefined;
   }
 
-  public sair(): void {
+  public quit(): void {
     firebase.auth().signOut()
       .then(() => {
         localStorage.removeItem('idToken');

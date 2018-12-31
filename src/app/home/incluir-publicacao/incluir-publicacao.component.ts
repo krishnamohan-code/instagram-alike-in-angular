@@ -16,21 +16,21 @@ import { Observable, interval, observable, Subject, pipe } from 'rxjs';
 
 export class IncluirPublicacaoComponent implements OnInit {
 
-  @Output() public atualizarTimeLine: EventEmitter<any> = new  EventEmitter<any>();
+  @Output() public updateTimeLine: EventEmitter<any> = new  EventEmitter<any>();
 
   public email: string;
-  private imagem: any;
+  private picture: any;
 
-  public progressoPublicacao = 'pendente';
-  public porcentagemUpload: number;
+  public progressPostPublish = 'pending';
+  public uploadPercentage: number;
 
-  public formPublicacao: FormGroup = new FormGroup({
+  public formPublish: FormGroup = new FormGroup({
     'titulo': new FormControl(null, [
       Validators.required
     ])
   });
 
-  constructor(private bd: Bd, private progresso: Progresso) { }
+  constructor(private bd: Bd, private progress: Progresso) { }
 
   ngOnInit() {
     firebase.auth().onAuthStateChanged((user) => {
@@ -38,40 +38,41 @@ export class IncluirPublicacaoComponent implements OnInit {
     });
   }
 
-  public publicar(): void {
-    this.bd.publicar({
+  public publish(): void {
+    this.bd.publish({
       email: this.email,
-      titulo: this.formPublicacao.value.titulo,
-      imagem: this.imagem[0]
+      titulo: this.formPublish.value.titulo,
+      imagem: this.picture[0]
     });
 
-    const acompanhamentoUpload = interval(1500);
+    const uploadCheck = interval(1500);
 
     const continua = new Subject();
 
     continua.next(true);
 
-    acompanhamentoUpload
+    uploadCheck
       .pipe(takeUntil(continua))
       .subscribe(() => {
-        this.progressoPublicacao = 'andamento';
+        console.log('em andamento');
+        this.progressPostPublish = 'going';
 
-        this.porcentagemUpload = Math.round(
-          (this.progresso.estado.bytesTransferred / this.progresso.estado.totalBytes) * 100
+        this.uploadPercentage = Math.round(
+          (this.progress.state.bytesTransferred / this.progress.state.totalBytes) * 100
         );
 
-        if (this.progresso.status === 'concluido') {
-          this.progressoPublicacao = 'concluido';
-          this.atualizarTimeLine.emit();
+        if (this.progress.status === 'completed') {
+          this.progressPostPublish = 'completed';
+          this.updateTimeLine.emit();
           continua.next(false);
         }
       });
 
   }
-  public preparaImagemUpload(event: Event): void {
-    this.imagem = (<HTMLInputElement>event.target).files;
+  public prepareImageUpload(event: Event): void {
+    this.picture = (<HTMLInputElement>event.target).files;
   }
-  public setProgressoPublicacaoPendente(): void {
-    this.progressoPublicacao = 'pendente';
+  public setPublishProgressPending(): void {
+    this.progressPostPublish = 'pending';
   }
 }

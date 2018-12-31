@@ -1,11 +1,11 @@
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
-    <div class="modal-content" *ngIf="progressoPublicacao === 'pendente'" >
-    <form [formGroup]="formPublicacao" (ngSubmit)="publicar()"  >
+    <div class="modal-content" *ngIf="progressPostPublish === 'pending'" >
+    <form [formGroup]="formPublish" (ngSubmit)="publish()"  >
 
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Adicionar publicação</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="setProgressoPublicacaoPendente()" >
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="setPublishProgressPending()" >
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -16,7 +16,7 @@
           type="file"
           class="form-control"
           accept="image/*"
-          (change)="preparaImagemUpload($event)"
+          (change)="prepareImageUpload($event)"
         />
 
         <input
@@ -37,25 +37,25 @@
     </div>
 
 
-    <div class="modal-content" *ngIf="progressoPublicacao === 'andamento'" >
+    <div class="modal-content" *ngIf="progressPostPublish === 'going'" >
 
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Publicando</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="setProgressoPublicacaoPendente()">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="setPublishProgressPending()">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
 
         <div class="modal-body">
-          Progresso: {{porcentagemUpload}}%
+          Progresso: {{uploadPercentage}}%
         </div>
       </div>
 
-      <div class="modal-content" *ngIf="progressoPublicacao === 'concluido'" >
+      <div class="modal-content" *ngIf="progressPostPublish === 'completed'" >
 
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Publicado</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="setProgressoPublicacaoPendente()">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="setPublishProgressPending()">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>

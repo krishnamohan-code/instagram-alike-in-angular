@@ -1,15 +1,15 @@
-<div class="row" *ngFor="let publicacao of publicacoes" >
+<div class="row" *ngFor="let post of posts" >
   <div class="col d-flex justify-content-center">
     <div class="card">
       <div class="card-body">
-        <p class="card-text"><strong>{{ publicacao.nome_usuario }}</strong></p>
+        <p class="card-text"><strong>{{ post.nome_usuario }}</strong></p>
       </div>
 
-      <img class="card-img" [src]="publicacao.url_imagem || ''" />
+      <img class="card-img" [src]="post.url_imagem || ''" />
 
       <div class="card-body">
         <p class="card-text">
-          <strong>{{ publicacao.nome_usuario }} </strong> {{ publicacao.titulo }}
+          <strong>{{ post.nome_usuario }} </strong> {{ post.titulo }}
         </p>
 
         <hr />

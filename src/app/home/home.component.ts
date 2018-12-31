@@ -15,13 +15,13 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
   }
 
-  public sair(): void {
-    this.autenticacao.sair();
+  public quit(): void {
+    this.autenticacao.quit();
   }
 
 
-  public atualizarTimeLine(): void {
-    this.publicacoes.atualizarTimeLine();
+  public updateTimeLine(): void {
+    this.publicacoes.updateTimeLine();
   }
 
 }

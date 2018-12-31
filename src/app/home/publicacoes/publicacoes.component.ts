@@ -8,7 +8,7 @@ import * as firebase from 'firebase';
 })
 export class PublicacoesComponent implements OnInit {
   public email: string;
-  public publicacoes: any;
+  public posts: any;
 
   constructor(private bd: Bd) { }
 
@@ -16,16 +16,16 @@ export class PublicacoesComponent implements OnInit {
     firebase.auth().onAuthStateChanged((user) => {
       this.email = user.email;
 
-      this.atualizarTimeLine();
+      this.updateTimeLine();
     });
 
 
   }
 
-  public atualizarTimeLine(): void {
+  public updateTimeLine(): void {
     this.bd.consultaPublicacoes(this.email)
-      .then((publicacoes: any) => {
-        this.publicacoes = publicacoes;
+      .then((posts: any) => {
+        this.posts = posts;
       });
   }
 }
